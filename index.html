@@ -122,6 +122,10 @@ h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,8vw,6rem);font-weig
 .hero-ctas{display:flex;justify-content:center;gap:1rem;animation:fade-up .8s 1.05s both;}
 @keyframes fade-up{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
 
+/* Typewriter Cursor */
+.typewriter-cursor{font-size:.8rem;color:var(--gold);animation:blink 1s step-end infinite;margin-left:4px;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
 /* ═══════════════════
    GALLERY I — ABOUT
 ═══════════════════ */
@@ -309,10 +313,8 @@ footer{background:var(--dark);border-top:1px solid rgba(201,162,39,.07);text-ali
 
     <p class="hero-subtitle">Curating Innovation, Creativity &amp; Technology</p>
 
-    <div class="hero-roles">
-      <span class="hero-role">AI Developer <span class="hero-role-dot"></span></span>
-      <span class="hero-role">Full-Stack Engineer <span class="hero-role-dot"></span></span>
-      <span class="hero-role">Second-Year CSE</span>
+    <div class="hero-roles" style="min-height:20px;">
+      <span class="hero-role" id="typewriter"></span><span class="typewriter-cursor">|</span>
     </div>
 
     <div class="hero-ctas">
@@ -676,11 +678,7 @@ footer{background:var(--dark);border-top:1px solid rgba(201,162,39,.07);text-ali
       </div>
     </div>
   </div>
-</div>
-
-<footer>"The Museum of Shivani R J" &nbsp;·&nbsp; Curated with care in Chennai, India &nbsp;·&nbsp; © 2025</footer>
-
-<script>
+</div><script>
 // Scroll progress
 const sp = document.getElementById('sp');
 window.addEventListener('scroll',()=>{
@@ -779,6 +777,33 @@ document.addEventListener('mousemove', e => {
   cursorGlow.style.left = e.clientX + 'px';
   cursorGlow.style.top  = e.clientY + 'px';
 }, {passive:true});
+
+// ── TYPEWRITER EFFECT ──
+(function(){
+  const words = ["AI Developer", "Full-Stack Engineer", "Second-Year CSE Student"];
+  let i = 0, j = 0, isDeleting = false, isWaiting = false;
+  const tw = document.getElementById('typewriter');
+  
+  function type() {
+    const current = words[i];
+    if (isDeleting) {
+      tw.textContent = current.substring(0, j - 1);
+      j--;
+      if (j == 0) { isDeleting = false; i = (i + 1) % words.length; }
+    } else {
+      tw.textContent = current.substring(0, j + 1);
+      j++;
+      if (j == current.length) { isDeleting = true; isWaiting = true; }
+    }
+    
+    let speed = isDeleting ? 40 : 100;
+    if (isWaiting) { speed = 1500; isWaiting = false; }
+    
+    setTimeout(type, speed);
+  }
+  
+  setTimeout(type, 1800); // start after hero animations
+})();
 </script>
 </body>
 </html>
