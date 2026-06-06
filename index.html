@@ -189,24 +189,34 @@ h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,8vw,6rem);font-weig
 #skills-section .gallery-tag{color:rgba(201,162,39,.55);}
 #skills-section .sub{color:rgba(var(--white-rgb),.3);}
 
-.collection-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.15);position:relative;overflow:hidden;}
-.collection-grid::before{content:'';position:absolute;top:0;left:0;right:0;height:100%;background:linear-gradient(to bottom,transparent,rgba(201,162,39,.08),transparent);animation:scanline 6s linear infinite;pointer-events:none;z-index:0;}
-@keyframes scanline{0%{transform:translateY(-100%);}100%{transform:translateY(100%);}}
+/* Archive Tabs */
+.archive-tabs { display:flex; gap:2rem; margin-bottom: 3.5rem; border-bottom: 1px solid rgba(201,162,39,.15); padding-bottom: 1.25rem; flex-wrap: wrap; justify-content: center; }
+.archive-tab { background: transparent; border: none; color: rgba(var(--white-rgb), .4); font-family: 'Cormorant Garamond', serif; font-size: .85rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; cursor: none; transition: color .3s, transform .3s; position: relative; }
+.archive-tab:hover { color: rgba(var(--white-rgb), .8); }
+.archive-tab.active { color: var(--gold); }
+.archive-tab::after { content: ''; position: absolute; bottom: -1.25rem; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transition: transform .3s; }
+.archive-tab.active::after { transform: scaleX(1); }
+.archive-panel { display: none; animation: fade-up .5s ease forwards; }
+.archive-panel.active { display: block; }
 
-.collection-cat{grid-column:1/-1;background:linear-gradient(90deg,rgba(201,162,39,.06),transparent);padding:.7rem 1.25rem;font-family:'Cormorant Garamond',serif;font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(201,162,39,.6);display:flex;align-items:center;gap:.75rem;position:relative;z-index:1;border-bottom:1px solid rgba(201,162,39,.1);}
-.collection-cat::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.2),transparent);}
+.collection-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:2rem;position:relative;}
 
-.artifact{background:var(--dark2);padding:2rem 1rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.85rem;transition:all .35s cubic-bezier(.22,1,.36,1);cursor:none;position:relative;z-index:1;overflow:hidden;}
-.artifact::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%, rgba(201,162,39,.12), transparent 70%);opacity:0;transition:opacity .35s;}
-.artifact:hover{background:rgba(201,162,39,.04);transform:translateY(-2px);box-shadow:0 10px 20px rgba(0,0,0,.2), 0 0 0 1px rgba(201,162,39,.1) inset;}
-.artifact:hover::before{opacity:1;}
+/* 3D Holographic Artifacts */
+.artifact{background:transparent;padding:0;perspective:1000px;cursor:none;position:relative;z-index:1;}
+.artifact-inner{background:var(--dark2);padding:2.5rem 1.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.2rem;border:1px solid rgba(201,162,39,.1);border-radius:2px;height:100%;transform-style:preserve-3d;transition:transform .4s ease-out, box-shadow .4s;}
+.artifact:hover .artifact-inner{box-shadow:0 25px 50px rgba(0,0,0,.4), 0 0 0 1px rgba(201,162,39,.3) inset; transition:none;}
+.artifact-inner::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%), rgba(255,255,255,.08) 0%, transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none;mix-blend-mode:overlay;}
+.artifact:hover .artifact-inner::after{opacity:1;}
 
-.artifact-case{width:56px;height:56px;border:1px solid rgba(201,162,39,.18);border-radius:2px;display:flex;align-items:center;justify-content:center;background:rgba(201,162,39,.03);transition:all .35s;position:relative;}
-.artifact:hover .artifact-case{border-color:var(--gold);background:rgba(201,162,39,.08);box-shadow:0 0 15px rgba(201,162,39,.15);}
-.artifact-case img, .artifact-case svg{transition:transform .35s, filter .35s;}
-.artifact:hover .artifact-case img, .artifact:hover .artifact-case svg{transform:scale(1.15);filter:drop-shadow(0 0 4px rgba(var(--white-rgb),.3));}
+.artifact-case, .artifact-name, .artifact-cat{transform:translateZ(30px); transition:transform .3s ease;}
+.artifact:hover .artifact-case, .artifact:hover .artifact-name, .artifact:hover .artifact-cat{transform:translateZ(50px);}
 
-.artifact-name{font-size:.78rem;font-weight:600;color:rgba(var(--white-rgb),.8);letter-spacing:.03em;transition:color .35s;position:relative;z-index:1;}
+.artifact-case{width:64px;height:64px;border:1px solid rgba(201,162,39,.18);border-radius:2px;display:flex;align-items:center;justify-content:center;background:rgba(201,162,39,.03);position:relative;}
+.artifact:hover .artifact-case{border-color:var(--gold);background:rgba(201,162,39,.08);box-shadow:0 0 20px rgba(201,162,39,.2);}
+.artifact-case img, .artifact-case svg{transition:filter .35s; width:34px; height:34px;}
+.artifact:hover .artifact-case img, .artifact:hover .artifact-case svg{filter:drop-shadow(0 0 6px rgba(var(--white-rgb),.4));}
+
+.artifact-name{font-size:.85rem;font-weight:600;color:rgba(var(--white-rgb),.8);letter-spacing:.05em;transition:color .35s;position:relative;z-index:1;}
 .artifact:hover .artifact-name{color:var(--gold);}
 .artifact-cat{font-family:'Cormorant Garamond',serif;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,162,39,.4);background:rgba(201,162,39,.05);padding:4px 10px;border-radius:1px;border:1px solid rgba(201,162,39,.1);transition:all .35s;position:relative;z-index:1;}
 .artifact:hover .artifact-cat{color:var(--dark);background:var(--gold);border-color:var(--gold);font-weight:700;}
@@ -500,87 +510,135 @@ body, a, button, .exhibit-card, .btn-gold, .btn-frame, .curator-btn, .ep-link, .
       <p class="sub">Artifacts curated through years of building, shipping, and iterating.</p>
     </div>
 
-    <div class="collection-grid reveal r2">
+    <div class="archive-tabs reveal r2">
+      <button class="archive-tab active" data-target="panel-lang">Programming Languages</button>
+      <button class="archive-tab" data-target="panel-ai">AI &amp; ML Frameworks</button>
+      <button class="archive-tab" data-target="panel-web">Web &amp; Database</button>
+    </div>
 
-      <div class="collection-cat">Programming Languages</div>
-      <div class="artifact">
-        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" width="28" height="28" alt="Python"></div>
-        <div class="artifact-name">Python</div>
-        <div class="artifact-cat">Lang · A-001</div>
-      </div>
-      <div class="artifact">
-        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" width="28" height="28" alt="Java"></div>
-        <div class="artifact-name">Java</div>
-        <div class="artifact-cat">Lang · A-002</div>
-      </div>
-      <div class="artifact">
-        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" width="28" height="28" alt="HTML5"></div>
-        <div class="artifact-name">HTML5</div>
-        <div class="artifact-cat">Lang · A-003</div>
-      </div>
-      <div class="artifact">
-        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" width="28" height="28" alt="CSS3"></div>
-        <div class="artifact-name">CSS3</div>
-        <div class="artifact-cat">Lang · A-004</div>
-      </div>
-      <div class="artifact">
-        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width="28" height="28" alt="JavaScript"></div>
-        <div class="artifact-name">JavaScript</div>
-        <div class="artifact-cat">Lang · A-005</div>
-      </div>
+    <div class="archive-panels reveal r3">
 
-      <div class="collection-cat">AI &amp; ML Frameworks</div>
-      <div class="artifact">
-        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" width="28" height="28" alt="PyTorch"></div>
-        <div class="artifact-name">PyTorch</div>
-        <div class="artifact-cat">AI · B-001</div>
-      </div>
-      <div class="artifact">
-        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg" width="28" height="28" alt="Scikit-learn"></div>
-        <div class="artifact-name">Scikit-learn</div>
-        <div class="artifact-cat">AI · B-002</div>
-      </div>
-      <div class="artifact">
-        <div class="artifact-case"><svg width="28" height="28" viewBox="0 0 95 88" fill="none"><path d="M47.206 1.5C22.01 1.5 1.5 22.01 1.5 47.206c0 25.196 20.51 45.706 45.706 45.706 25.197 0 45.706-20.51 45.706-45.706C92.912 22.01 72.403 1.5 47.206 1.5z" fill="#FFD21E"/><ellipse cx="33" cy="44" rx="5" ry="7" fill="#333"/><ellipse cx="62" cy="44" rx="5" ry="7" fill="#333"/><path d="M33 62 Q47.5 72 62 62" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div>
-        <div class="artifact-name">Hugging Face</div>
-        <div class="artifact-cat">AI · B-003</div>
-      </div>
-      <div class="artifact">
-        <div class="artifact-case"><svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#1C3C73"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="9" font-weight="800">LC</text></svg></div>
-        <div class="artifact-name">LangChain</div>
-        <div class="artifact-cat">AI · B-004</div>
-      </div>
-      <div class="artifact">
-        <div class="artifact-case"><svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#005A8B"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="7" font-weight="800">FAISS</text></svg></div>
-        <div class="artifact-name">FAISS</div>
-        <div class="artifact-cat">AI · B-005</div>
+      <!-- Panel 1: Languages -->
+      <div class="archive-panel active" id="panel-lang">
+        <div class="collection-grid">
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python"></div>
+              <div class="artifact-name">Python</div>
+              <div class="artifact-cat">Lang · A-001</div>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java"></div>
+              <div class="artifact-name">Java</div>
+              <div class="artifact-cat">Lang · A-002</div>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5"></div>
+              <div class="artifact-name">HTML5</div>
+              <div class="artifact-cat">Lang · A-003</div>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3"></div>
+              <div class="artifact-name">CSS3</div>
+              <div class="artifact-cat">Lang · A-004</div>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript"></div>
+              <div class="artifact-name">JavaScript</div>
+              <div class="artifact-cat">Lang · A-005</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="collection-cat">Web &amp; Database</div>
-      <div class="artifact">
-        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" width="28" height="28" alt="MySQL"></div>
-        <div class="artifact-name">MySQL</div>
-        <div class="artifact-cat">DB · C-001</div>
+      <!-- Panel 2: AI & ML -->
+      <div class="archive-panel" id="panel-ai">
+        <div class="collection-grid">
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" alt="PyTorch"></div>
+              <div class="artifact-name">PyTorch</div>
+              <div class="artifact-cat">AI · B-001</div>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg" alt="Scikit-learn"></div>
+              <div class="artifact-name">Scikit-learn</div>
+              <div class="artifact-cat">AI · B-002</div>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><svg viewBox="0 0 95 88" fill="none"><path d="M47.206 1.5C22.01 1.5 1.5 22.01 1.5 47.206c0 25.196 20.51 45.706 45.706 45.706 25.197 0 45.706-20.51 45.706-45.706C92.912 22.01 72.403 1.5 47.206 1.5z" fill="#FFD21E"/><ellipse cx="33" cy="44" rx="5" ry="7" fill="#333"/><ellipse cx="62" cy="44" rx="5" ry="7" fill="#333"/><path d="M33 62 Q47.5 72 62 62" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="artifact-name">Hugging Face</div>
+              <div class="artifact-cat">AI · B-003</div>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#1C3C73"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="9" font-weight="800">LC</text></svg></div>
+              <div class="artifact-name">LangChain</div>
+              <div class="artifact-cat">AI · B-004</div>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#005A8B"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="7" font-weight="800">FAISS</text></svg></div>
+              <div class="artifact-name">FAISS</div>
+              <div class="artifact-cat">AI · B-005</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="artifact">
-        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/streamlit/streamlit-original.svg" width="28" height="28" alt="Streamlit"></div>
-        <div class="artifact-name">Streamlit</div>
-        <div class="artifact-cat">Web · C-002</div>
-      </div>
-      <div class="artifact">
-        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" width="28" height="28" alt="Servlets"></div>
-        <div class="artifact-name">Java Servlets</div>
-        <div class="artifact-cat">Web · C-003</div>
-      </div>
-      <div class="artifact">
-        <div class="artifact-case"><svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#F16822"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="6.5" font-weight="800">Web3</text></svg></div>
-        <div class="artifact-name">Web3.js</div>
-        <div class="artifact-cat">Web · C-004</div>
-      </div>
-      <div class="artifact">
-        <div class="artifact-case"><svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#363636"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="6" font-weight="800">SOL</text></svg></div>
-        <div class="artifact-name">Solidity</div>
-        <div class="artifact-cat">Web · C-005</div>
+
+      <!-- Panel 3: Web & Database -->
+      <div class="archive-panel" id="panel-web">
+        <div class="collection-grid">
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL"></div>
+              <div class="artifact-name">MySQL</div>
+              <div class="artifact-cat">DB · C-001</div>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/streamlit/streamlit-original.svg" alt="Streamlit"></div>
+              <div class="artifact-name">Streamlit</div>
+              <div class="artifact-cat">Web · C-002</div>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Servlets"></div>
+              <div class="artifact-name">Java Servlets</div>
+              <div class="artifact-cat">Web · C-003</div>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#F16822"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="6.5" font-weight="800">Web3</text></svg></div>
+              <div class="artifact-name">Web3.js</div>
+              <div class="artifact-cat">Web · C-004</div>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="artifact-inner">
+              <div class="artifact-case"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#363636"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="6" font-weight="800">SOL</text></svg></div>
+              <div class="artifact-name">Solidity</div>
+              <div class="artifact-cat">Web · C-005</div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -1032,6 +1090,45 @@ themeBtn.addEventListener('click', () => {
     localStorage.setItem('theme', 'dark');
   }
 });
+// ── ARCHIVE TABS & 3D CARDS ──
+(function(){
+  const tabs = document.querySelectorAll('.archive-tab');
+  const panels = document.querySelectorAll('.archive-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('data-target')).classList.add('active');
+    });
+  });
+
+  const artifacts = document.querySelectorAll('.artifact');
+  artifacts.forEach(card => {
+    const inner = card.querySelector('.artifact-inner');
+    if(!inner) return;
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -12;
+      const rotateY = ((x - centerX) / centerX) * 12;
+      
+      inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      inner.style.setProperty('--gx', `${(x / rect.width)*100}%`);
+      inner.style.setProperty('--gy', `${(y / rect.height)*100}%`);
+    });
+    card.addEventListener('mouseleave', () => {
+      inner.style.transform = `rotateX(0) rotateY(0)`;
+      inner.style.transition = `transform .5s ease, box-shadow .5s ease`;
+    });
+    card.addEventListener('mouseenter', () => {
+      inner.style.transition = `none`;
+    });
+  });
+})();
 </script>
 </body>
 </html>
