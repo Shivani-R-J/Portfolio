@@ -513,7 +513,7 @@ body, a, button, .exhibit-card, .btn-gold, .btn-frame, .curator-btn, .ep-link, .
     <div class="archive-tabs reveal r2">
       <button type="button" class="archive-tab active" data-target="panel-lang">Programming Languages</button>
       <button type="button" class="archive-tab" data-target="panel-ai">AI &amp; ML Frameworks</button>
-      <button type="button" class="archive-tab" data-target="panel-web">Web &amp; Database</button>
+      <button type="button" class="archive-tab" data-target="panel-web">Web, DB &amp; Automation</button>
     </div>
 
     <div class="archive-panels reveal r3">
@@ -633,9 +633,9 @@ body, a, button, .exhibit-card, .btn-gold, .btn-frame, .curator-btn, .ep-link, .
           </div>
           <div class="artifact">
             <div class="artifact-inner">
-              <div class="artifact-case"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#363636"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="6" font-weight="800">SOL</text></svg></div>
-              <div class="artifact-name">Solidity</div>
-              <div class="artifact-cat">Web · C-005</div>
+              <div class="artifact-case"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#FA4616"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="6" font-weight="800">UiPath</text></svg></div>
+              <div class="artifact-name">UiPath (RPA)</div>
+              <div class="artifact-cat">Auto · C-006</div>
             </div>
           </div>
         </div>
@@ -653,7 +653,7 @@ body, a, button, .exhibit-card, .btn-gold, .btn-frame, .curator-btn, .ep-link, .
     <div class="sh reveal">
       <div class="gallery-tag">Directory III</div>
       <h2>The Logic <em>Exhibition</em></h2>
-      <p class="sub">Five original works spanning NLP, Generative AI, Full-Stack development, and Blockchain.</p>
+      <p class="sub">Six original works spanning NLP, Generative AI, Full-Stack development, RPA, and Blockchain.</p>
     </div>
 
     <div class="exhibit-hall">
@@ -730,11 +730,11 @@ body, a, button, .exhibit-card, .btn-gold, .btn-frame, .curator-btn, .ep-link, .
         </div>
       </div>
 
-      <div class="exhibit-card feat reveal">
+      <div class="exhibit-card reveal">
         <div class="ei">
-          <img src="images/project_clustering.png" alt="Player Clustering" loading="lazy" style="object-position:top;">
+          <img src="images/project_clustering.png" alt="Player Clustering" loading="lazy">
           <div class="ei-ov"></div>
-          <div class="ei-tag">Exhibit 105 · Featured Work</div>
+          <div class="ei-tag">Exhibit 105</div>
         </div>
         <div class="ep">
           <div class="ep-cat">Machine Learning</div>
@@ -744,6 +744,24 @@ body, a, button, .exhibit-card, .btn-gold, .btn-frame, .curator-btn, .ep-link, .
           <div class="ep-foot">
             <div class="ep-chips"><span class="ep-chip">Python</span><span class="ep-chip">Scikit-learn</span><span class="ep-chip">PCA</span><span class="ep-chip">K-Means</span></div>
             <a class="ep-link" href="#" aria-label="View Clustering"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="exhibit-card reveal r2">
+        <div class="ei">
+          <img src="images/project_greentrace.png" alt="GreenTrace" loading="lazy">
+          <div class="ei-ov"></div>
+          <div class="ei-tag">Exhibit 106</div>
+        </div>
+        <div class="ep">
+          <div class="ep-cat">RPA · Automation</div>
+          <div class="ep-title">GreenTrace ESG Risk Monitoring Bot</div>
+          <div class="ep-impact">Scalable automated supply chain auditing</div>
+          <p class="ep-desc">A fully automated workflow developed using UiPath that collects supplier-related news via REST API, processes the JSON data, analyzes ESG-related keywords, and generates risk reports in Excel. Features queue-based transaction management.</p>
+          <div class="ep-foot">
+            <div class="ep-chips"><span class="ep-chip">UiPath</span><span class="ep-chip">RPA</span><span class="ep-chip">REST API</span><span class="ep-chip">JSON</span></div>
+            <a class="ep-link" href="#" aria-label="View GreenTrace"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
           </div>
         </div>
       </div>
@@ -1025,7 +1043,8 @@ const caseStudies = {
   "PDF-Based Document Summarization System": "<h4>The Problem</h4><p>Reading lengthy technical documents is time-consuming. Existing tools hallucinate information or fail to parse large PDFs effectively.</p><h4>The Architecture</h4><p>I built a robust NLP pipeline using Python. The system chunks PDF text, embeds it using Hugging Face models, and stores vectors in FAISS for semantic retrieval. A BART transformer model then generates accurate summaries.</p><h4>The Outcome</h4><p>A scalable tool that cuts document review time by 80%, showcasing my ability to integrate LLMs, vector databases, and traditional NLP.</p>",
   "Text-to-Image Art Generator": "<h4>The Problem</h4><p>Running high-quality generative AI models locally requires complex environment setups and lacks accessible interfaces for users.</p><h4>The Architecture</h4><p>I wrapped the Stable Diffusion model (via PyTorch) in a clean Streamlit web app. The application optimizes GPU memory usage during inference to ensure fast, real-time image generation from prompts.</p><h4>The Outcome</h4><p>A seamless, highly interactive web application that bridges the gap between complex deep learning models and user-friendly design.</p>",
   "Player Performance Clustering & Analysis": "<h4>The Problem</h4><p>Sports scouting relies heavily on intuition. Finding players with similar statistical profiles across massive datasets is difficult.</p><h4>The Architecture</h4><p>I utilized Principal Component Analysis (PCA) to reduce the dimensionality of complex player stats, then applied K-Means and Hierarchical clustering algorithms.</p><h4>The Outcome</h4><p>Achieved a high silhouette score of 0.888, proving the clusters are distinct and statistically significant, providing a mathematical foundation for scouting.</p>",
-  "Blockchain Based Event Ticketing System": "<h4>The Problem</h4><p>The event industry is plagued by ticket scalping, counterfeit tickets, and exorbitant secondary market fees.</p><h4>The Architecture</h4><p>I developed a dApp where tickets are minted as non-fungible tokens (NFTs) on an Ethereum-compatible testnet using Solidity. The frontend, built with Web3.js, allows users to connect their wallets and securely mint tickets.</p><h4>The Outcome</h4><p>A zero-fraud ticketing ecosystem demonstrating practical Web3 utility, secure smart contract development, and modern dApp architecture.</p>"
+  "Blockchain Based Event Ticketing System": "<h4>The Problem</h4><p>The event industry is plagued by ticket scalping, counterfeit tickets, and exorbitant secondary market fees.</p><h4>The Architecture</h4><p>I developed a dApp where tickets are minted as non-fungible tokens (NFTs) on an Ethereum-compatible testnet using Solidity. The frontend, built with Web3.js, allows users to connect their wallets and securely mint tickets.</p><h4>The Outcome</h4><p>A zero-fraud ticketing ecosystem demonstrating practical Web3 utility, secure smart contract development, and modern dApp architecture.</p>",
+  "GreenTrace ESG Risk Monitoring Bot": "<h4>The Problem</h4><p>Manually monitoring news articles and collecting ESG-related information for suppliers is time-consuming, inconsistent, and inefficient.</p><h4>The Architecture</h4><p>I built an automated workflow using UiPath that collects supplier news via REST APIs, analyzes content for ESG-related keywords (pollution, climate issues, fraud), and calculates risk scores. Results are exported to Excel, with transactions managed scalably via UiPath Orchestrator Queues.</p><h4>The Outcome</h4><p>A fully automated, scalable ESG auditing solution that reduces manual effort significantly, improves compliance visibility, and supports responsible supply chain management.</p>"
 };
 
 const modal = document.getElementById('exhibit-modal');
