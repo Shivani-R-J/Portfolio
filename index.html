@@ -424,8 +424,12 @@ body, a, button, .exhibit-card, .btn-gold, .btn-frame, .curator-btn, .ep-link, .
 
     <p class="hero-subtitle">Curating Code, Algorithms &amp; Digital Artifacts</p>
 
-    <div class="hero-roles" style="min-height:20px;">
-      <span class="hero-role" id="typewriter"></span><span class="typewriter-cursor">|</span>
+    <div class="hero-roles">
+      <span class="hero-role">AI Developer</span>
+      <div class="hero-role-dot"></div>
+      <span class="hero-role">Full-Stack Engineer</span>
+      <div class="hero-role-dot"></div>
+      <span class="hero-role">CSE Student</span>
     </div>
 
     <div class="hero-ctas">
@@ -936,32 +940,6 @@ document.addEventListener('mousemove', e => {
   cursorGlow.style.top  = e.clientY + 'px';
 }, {passive:true});
 
-// ── TYPEWRITER EFFECT ──
-(function(){
-  const words = ["AI Developer", "Full-Stack Engineer", "Second-Year CSE Student"];
-  let i = 0, j = 0, isDeleting = false, isWaiting = false;
-  const tw = document.getElementById('typewriter');
-  
-  function type() {
-    const current = words[i];
-    if (isDeleting) {
-      tw.textContent = current.substring(0, j - 1);
-      j--;
-      if (j == 0) { isDeleting = false; i = (i + 1) % words.length; }
-    } else {
-      tw.textContent = current.substring(0, j + 1);
-      j++;
-      if (j == current.length) { isDeleting = true; isWaiting = true; }
-    }
-    
-    let speed = isDeleting ? 40 : 100;
-    if (isWaiting) { speed = 1500; isWaiting = false; }
-    
-    setTimeout(type, speed);
-  }
-  
-  setTimeout(type, 3000); // start after loader + hero animations
-})();
 
 // ── LOADER ──
 window.addEventListener('load', () => {
