@@ -796,13 +796,11 @@ body, a, button, .exhibit-card, .btn-gold, .btn-frame, .curator-btn, .ep-link, .
           </a>
         </div>
       </div>
-      <form class="contact-form reveal r5" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+      <form class="contact-form reveal r5" action="mailto:shivani.rj.2024.cse@rajalakshmi.edu.in" method="POST" enctype="text/plain">
         <input type="text" name="name" placeholder="Your Name" required>
         <input type="email" name="email" placeholder="Your Email" required>
         <textarea name="message" placeholder="Your Message" required></textarea>
-        <button type="submit" id="submit-btn">Initialize Transmission</button>
-        <div id="form-result" style="display:none;font-size:.85rem;color:var(--gold);margin-top:.5rem;text-align:center;"></div>
+        <button type="submit">Send Message</button>
       </form>
     </div>
   </div>
@@ -848,53 +846,6 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     document.body.style.overflow = '';
   });
 });
-
-// Contact Form Submission (Web3Forms)
-const contactForm = document.getElementById('contact-form');
-const submitBtn = document.getElementById('submit-btn');
-const formResult = document.getElementById('form-result');
-
-contactForm.addEventListener('submit', function(e) {
-  e.preventDefault();
-  const formData = new FormData(contactForm);
-  const object = Object.fromEntries(formData);
-  const json = JSON.stringify(object);
-
-  submitBtn.innerHTML = "Transmitting...";
-  submitBtn.style.opacity = "0.7";
-
-  fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-      body: json
-  })
-  .then(async (response) => {
-      let json = await response.json();
-      if (response.status == 200) {
-          formResult.style.display = "block";
-          formResult.innerHTML = "Transmission Successful. The curator will respond shortly.";
-          contactForm.reset();
-      } else {
-          console.log(response);
-          formResult.style.display = "block";
-          formResult.innerHTML = "Transmission Failed: " + json.message;
-      }
-  })
-  .catch(error => {
-      console.log(error);
-      formResult.style.display = "block";
-      formResult.innerHTML = "Network error. Please try again.";
-  })
-  .finally(() => {
-      submitBtn.innerHTML = "Initialize Transmission";
-      submitBtn.style.opacity = "1";
-      setTimeout(() => { formResult.style.display = "none"; }, 5000);
-  });
-});
-
 // Reveal
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
