@@ -190,8 +190,8 @@ h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,8vw,6rem);font-weig
 #skills-section .sub{color:rgba(var(--white-rgb),.3);}
 
 /* Archive Tabs */
-.archive-tabs { display:flex; gap:2rem; margin-bottom: 3.5rem; border-bottom: 1px solid rgba(201,162,39,.15); padding-bottom: 1.25rem; flex-wrap: wrap; justify-content: center; }
-.archive-tab { background: transparent; border: none; color: rgba(var(--white-rgb), .4); font-family: 'Cormorant Garamond', serif; font-size: .85rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; cursor: none; transition: color .3s, transform .3s; position: relative; }
+.archive-tabs { display:flex; gap:2rem; margin-bottom: 3.5rem; border-bottom: 1px solid rgba(201,162,39,.15); padding-bottom: 1.25rem; flex-wrap: wrap; justify-content: center; position: relative; z-index: 50; }
+.archive-tab { background: transparent; border: none; color: rgba(var(--white-rgb), .4); font-family: 'Cormorant Garamond', serif; font-size: .85rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; transition: color .3s, transform .3s; position: relative; pointer-events: auto; }
 .archive-tab:hover { color: rgba(var(--white-rgb), .8); }
 .archive-tab.active { color: var(--gold); }
 .archive-tab::after { content: ''; position: absolute; bottom: -1.25rem; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transition: transform .3s; }
@@ -511,9 +511,9 @@ body, a, button, .exhibit-card, .btn-gold, .btn-frame, .curator-btn, .ep-link, .
     </div>
 
     <div class="archive-tabs reveal r2">
-      <button class="archive-tab active" data-target="panel-lang">Programming Languages</button>
-      <button class="archive-tab" data-target="panel-ai">AI &amp; ML Frameworks</button>
-      <button class="archive-tab" data-target="panel-web">Web &amp; Database</button>
+      <button type="button" class="archive-tab active" data-target="panel-lang">Programming Languages</button>
+      <button type="button" class="archive-tab" data-target="panel-ai">AI &amp; ML Frameworks</button>
+      <button type="button" class="archive-tab" data-target="panel-web">Web &amp; Database</button>
     </div>
 
     <div class="archive-panels reveal r3">
@@ -1091,15 +1091,19 @@ themeBtn.addEventListener('click', () => {
   }
 });
 // ── ARCHIVE TABS & 3D CARDS ──
-(function(){
+window.addEventListener('DOMContentLoaded', () => {
   const tabs = document.querySelectorAll('.archive-tab');
   const panels = document.querySelectorAll('.archive-panel');
   tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       tabs.forEach(t => t.classList.remove('active'));
       panels.forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
-      document.getElementById(tab.getAttribute('data-target')).classList.add('active');
+      const targetId = tab.getAttribute('data-target');
+      const targetPanel = document.getElementById(targetId);
+      if (targetPanel) targetPanel.classList.add('active');
     });
   });
 
@@ -1128,7 +1132,7 @@ themeBtn.addEventListener('click', () => {
       inner.style.transition = `none`;
     });
   });
-})();
+});
 </script>
 </body>
 </html>
