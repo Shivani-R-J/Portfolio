@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Museum of Shivani R J</title>
+<meta name="description" content="A curated portfolio of AI, ML, and Full-Stack projects by Shivani R J — Second-year CSE student at Rajalakshmi Engineering College.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --ivory:#F5F0E8;
+  --cream:#FDFAF5;
+  --gold:#C9A227;
+  --gold2:#E8C455;
+  --gold-dim:#A8841F;
+  --gold-t:rgba(201,162,39,0.08);
+  --gold-b:rgba(201,162,39,0.22);
+  --dark:#120F0D;
+  --dark2:#1C1713;
+  --dark3:#231D18;
+  --text:#2C2420;
+  --body:#6B5C54;
+  --muted:#9E8E84;
+  --nav-h:72px;
+}
+
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--body);line-height:1.7;overflow-x:hidden;}
+
+/* Subtle floor tile texture */
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(201,162,39,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(201,162,39,.022) 1px,transparent 1px);
+  background-size:62px 62px;}
+
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--dark);}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px;}
+
+/* ── SCROLL PROGRESS ── */
+#sp{position:fixed;top:0;left:0;right:0;height:3px;z-index:9999;background:linear-gradient(90deg,var(--gold),var(--gold2));transform:scaleX(0);transform-origin:left;transition:transform .1s linear;}
+
+/* ── NAVBAR ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 6vw;transition:background .4s,border-color .4s,box-shadow .4s;}
+nav.scrolled{background:rgba(253,250,245,.96);border-bottom:1px solid var(--gold-b);backdrop-filter:blur(12px);box-shadow:0 2px 30px rgba(201,162,39,.07);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:.95rem;letter-spacing:.1em;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo-icon{color:var(--gold);font-size:1.1rem;}
+.nav-links{list-style:none;display:flex;gap:2.5rem;}
+.nav-links a{text-decoration:none;font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--body);transition:color .2s;}
+.nav-links a:hover{color:var(--gold-dim);}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
+.reveal.visible{opacity:1;transform:none;}
+.r2{transition-delay:.12s;}.r3{transition-delay:.24s;}.r4{transition-delay:.36s;}
+
+/* ── SHARED ── */
+.wrap{max-width:1100px;margin:0 auto;padding:7rem 5vw;position:relative;z-index:1;}
+.gallery-tag{display:inline-block;font-family:'Cormorant Garamond',serif;font-size:.62rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:.5rem;}
+h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.15;color:var(--text);letter-spacing:-.01em;}
+h2 em{font-style:italic;color:var(--gold-dim);}
+.sh{margin-bottom:4rem;}
+.sub{color:var(--muted);margin-top:.75rem;font-size:.92rem;max-width:520px;line-height:1.7;}
+
+/* Ornamental divider */
+.orn{display:flex;align-items:center;gap:.75rem;margin:1.25rem 0;}
+.orn-l{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-b));}
+.orn-r{flex:1;height:1px;background:linear-gradient(90deg,var(--gold-b),transparent);}
+.orn-d{color:var(--gold);font-size:.45rem;}
+
+/* Exhibit label */
+.ex-num{font-family:'Cormorant Garamond',serif;font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim);display:flex;align-items:center;gap:6px;margin-bottom:.5rem;}
+.ex-num::before{content:'';width:14px;height:1px;background:var(--gold);}
+
+/* Buttons */
+.btn-gold{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--dark);padding:13px 28px;border-radius:2px;font-weight:600;font-size:.85rem;letter-spacing:.06em;text-decoration:none;transition:background .2s,transform .2s,box-shadow .2s;box-shadow:0 4px 20px rgba(201,162,39,.30);}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,162,39,.40);}
+.btn-frame{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--gold-b);color:rgba(255,255,255,.7);padding:12px 26px;border-radius:2px;font-weight:400;font-size:.95rem;letter-spacing:.06em;text-decoration:none;transition:all .2s;font-family:'Cormorant Garamond',serif;}
+.btn-frame:hover{border-color:var(--gold);color:var(--gold2);background:rgba(201,162,39,.06);}
+
+/* ═══════════════════
+   ENTRANCE HALL — HERO
+═══════════════════ */
+#hero{min-height:100vh;background:var(--dark);display:flex;align-items:center;justify-content:center;text-align:center;padding:var(--nav-h) 5vw 0;position:relative;overflow:hidden;}
+
+/* Ambient glow */
+#hero::before{content:'';position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.06),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+/* Outer ring */
+#hero::after{content:'';position:absolute;border:1px solid rgba(201,162,39,.06);border-radius:50%;width:660px;height:660px;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+
+.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--gold);animation:float-up linear infinite;}
+@keyframes float-up{0%{transform:translateY(100vh);opacity:0;}10%{opacity:.5;}90%{opacity:.15;}100%{transform:translateY(-10vh) translateX(15px);opacity:0;}}
+
+.hero-inner{position:relative;z-index:2;max-width:740px;}
+
+.hero-museum-tag{font-family:'Cormorant Garamond',serif;font-size:.72rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:rgba(201,162,39,.5);margin-bottom:1.75rem;animation:fade-up .8s .2s both;}
+
+.hero-plaque{border:1px solid rgba(201,162,39,.18);padding:3rem 4rem;position:relative;margin-bottom:2rem;animation:fade-up .8s .4s both;}
+.hero-plaque::before{content:'';position:absolute;inset:8px;border:1px solid rgba(201,162,39,.08);pointer-events:none;}
+.plaque-corner{position:absolute;width:16px;height:16px;border-color:rgba(201,162,39,.35);border-style:solid;border-width:0;}
+.plaque-corner.tl{top:4px;left:4px;border-top-width:1px;border-left-width:1px;}
+.plaque-corner.tr{top:4px;right:4px;border-top-width:1px;border-right-width:1px;}
+.plaque-corner.bl{bottom:4px;left:4px;border-bottom-width:1px;border-left-width:1px;}
+.plaque-corner.br{bottom:4px;right:4px;border-bottom-width:1px;border-right-width:1px;}
+
+.hero-the{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(.75rem,1.5vw,1rem);letter-spacing:.45em;text-transform:uppercase;color:rgba(201,162,39,.55);margin-bottom:.75rem;display:block;}
+h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,8vw,6rem);font-weight:800;line-height:1;color:#fff;letter-spacing:-.02em;}
+
+.hero-orn{display:flex;align-items:center;justify-content:center;gap:1rem;margin:1.75rem 0;animation:fade-up .8s .6s both;}
+.hero-orn-l,.hero-orn-r{width:90px;height:1px;background:rgba(201,162,39,.3);}
+.hero-orn-d{color:var(--gold);font-size:.5rem;}
+
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.2vw,1.4rem);font-style:italic;color:rgba(255,255,255,.5);letter-spacing:.04em;margin-bottom:.6rem;animation:fade-up .8s .75s both;}
+
+.hero-roles{display:flex;justify-content:center;gap:2rem;margin-bottom:2.5rem;animation:fade-up .8s .9s both;}
+.hero-role{font-size:.68rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);display:flex;align-items:center;gap:.6rem;}
+.hero-role-dot{width:3px;height:3px;border-radius:50%;background:var(--gold);opacity:.6;}
+
+.hero-ctas{display:flex;justify-content:center;gap:1rem;animation:fade-up .8s 1.05s both;}
+@keyframes fade-up{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+
+/* ═══════════════════
+   GALLERY I — ABOUT
+═══════════════════ */
+#about-section{background:var(--cream);}
+.about-exhibit{display:grid;grid-template-columns:1fr 310px;gap:3rem;align-items:start;}
+
+.about-card{background:var(--ivory);border:1px solid var(--gold-b);border-radius:2px;padding:2.5rem;position:relative;}
+.about-card::before{content:'';position:absolute;inset:8px;border:1px solid rgba(201,162,39,.1);pointer-events:none;}
+.bio-text{font-size:.93rem;color:var(--body);line-height:1.82;margin-bottom:.85rem;}
+.bio-text strong{color:var(--text);}
+.bio-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem;}
+.bio-tag{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border:1px solid var(--gold-b);color:var(--gold-dim);font-family:'Cormorant Garamond',serif;font-weight:600;border-radius:1px;background:rgba(201,162,39,.04);}
+
+.about-panel{display:flex;flex-direction:column;gap:1.2rem;}
+.panel-card{background:var(--ivory);border:1px solid var(--gold-b);border-radius:2px;padding:1.5rem;}
+.panel-card-title{font-family:'Cormorant Garamond',serif;font-size:.6rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:.85rem;}
+.college-name{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:.3rem;}
+.college-sub{font-size:.78rem;color:var(--muted);}
+.medium-text{font-size:.82rem;color:var(--body);line-height:1.75;}
+.quote-text{font-size:.9rem;color:var(--body);line-height:1.7;font-style:italic;font-family:'Cormorant Garamond',serif;}
+
+/* ═══════════════════
+   GALLERY II — SKILLS
+═══════════════════ */
+#skills-section{background:var(--dark2);}
+#skills-section h2{color:#fff;}
+#skills-section .gallery-tag{color:rgba(201,162,39,.55);}
+#skills-section .sub{color:rgba(255,255,255,.3);}
+
+.collection-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(201,162,39,.07);border:1px solid rgba(201,162,39,.07);}
+.collection-cat{grid-column:1/-1;background:rgba(201,162,39,.04);padding:.7rem 1.25rem;font-family:'Cormorant Garamond',serif;font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(201,162,39,.45);display:flex;align-items:center;gap:.75rem;}
+.collection-cat::after{content:'';flex:1;height:1px;background:rgba(201,162,39,.07);}
+
+.artifact{background:var(--dark2);padding:1.75rem 1rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.75rem;transition:background .25s;cursor:default;}
+.artifact:hover{background:rgba(201,162,39,.05);}
+.artifact-case{width:50px;height:50px;border:1px solid rgba(201,162,39,.14);border-radius:2px;display:flex;align-items:center;justify-content:center;background:rgba(201,162,39,.03);transition:border-color .25s;}
+.artifact:hover .artifact-case{border-color:rgba(201,162,39,.32);}
+.artifact-name{font-size:.76rem;font-weight:500;color:rgba(255,255,255,.65);}
+.artifact-cat{font-family:'Cormorant Garamond',serif;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,162,39,.38);}
+
+/* ═══════════════════
+   GALLERY III — PROJECTS
+═══════════════════ */
+#projects-section{background:var(--ivory);}
+.exhibit-hall{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+
+.exhibit-card{background:var(--cream);border:1px solid var(--gold-b);border-radius:2px;overflow:hidden;position:relative;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s,border-color .25s;}
+.exhibit-card:hover{transform:translateY(-5px);border-color:rgba(201,162,39,.45);box-shadow:0 22px 55px rgba(201,162,39,.10);}
+/* Museum spotlight on hover */
+.exhibit-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(201,162,39,.07) 0%,transparent 58%);opacity:0;transition:opacity .3s;pointer-events:none;z-index:1;}
+.exhibit-card:hover::after{opacity:1;}
+.exhibit-card.feat{grid-column:1/-1;display:grid;grid-template-columns:1.1fr 1fr;}
+
+.ei{position:relative;overflow:hidden;aspect-ratio:16/9;}
+.exhibit-card.feat .ei{aspect-ratio:auto;min-height:280px;}
+.ei img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease;filter:saturate(.88);}
+.exhibit-card:hover .ei img{transform:scale(1.04);}
+.ei-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(253,250,245,.7) 0%,transparent 52%);}
+.ei-tag{position:absolute;bottom:12px;left:12px;z-index:2;font-family:'Cormorant Garamond',serif;font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;background:rgba(253,250,245,.93);border:1px solid var(--gold-b);color:var(--gold-dim);padding:4px 10px;border-radius:1px;}
+
+.ep{padding:1.75rem;display:flex;flex-direction:column;gap:.45rem;}
+.ep-cat{font-family:'Cormorant Garamond',serif;font-size:.62rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-dim);}
+.ep-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--text);line-height:1.3;}
+.ep-impact{font-family:'Cormorant Garamond',serif;font-size:.9rem;font-style:italic;color:var(--gold-dim);}
+.ep-desc{font-size:.83rem;color:var(--body);line-height:1.72;flex:1;margin-top:.2rem;}
+.ep-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;border-top:1px solid var(--gold-b);padding-top:1rem;margin-top:.5rem;}
+.ep-chips{display:flex;flex-wrap:wrap;gap:.35rem;}
+.ep-chip{font-size:.65rem;padding:3px 9px;border:1px solid var(--gold-b);color:var(--gold-dim);font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:.06em;border-radius:1px;background:rgba(201,162,39,.04);}
+.ep-link{flex-shrink:0;width:30px;height:30px;border:1px solid var(--gold-b);border-radius:1px;display:flex;align-items:center;justify-content:center;color:var(--gold-dim);text-decoration:none;transition:background .2s,border-color .2s;}
+.ep-link:hover{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+
+/* ═══════════════════
+   GALLERY IV — EXPERIENCE
+═══════════════════ */
+#exp-section{background:var(--dark);}
+#exp-section h2{color:#fff;}
+#exp-section .gallery-tag{color:rgba(201,162,39,.55);}
+#exp-section .sub{color:rgba(255,255,255,.3);}
+
+.corridor{position:relative;padding-left:2.5rem;max-width:680px;}
+.corridor::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,var(--gold) 0%,rgba(201,162,39,.1) 100%);}
+.ci{position:relative;margin-bottom:2rem;}
+.ci-dot{position:absolute;left:-2.5rem;top:1.45rem;width:9px;height:9px;border-radius:50%;background:var(--gold);border:2px solid var(--dark);}
+.ci-card{background:rgba(201,162,39,.04);border:1px solid rgba(201,162,39,.12);border-radius:2px;padding:1.75rem;transition:border-color .25s,background .25s;}
+.ci:hover .ci-card{border-color:rgba(201,162,39,.28);background:rgba(201,162,39,.07);}
+.ci-role{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:.25rem;}
+.ci-org{font-size:.78rem;color:rgba(201,162,39,.7);letter-spacing:.06em;margin-bottom:.85rem;}
+.ci-desc{font-size:.83rem;color:rgba(255,255,255,.42);line-height:1.72;}
+
+/* ═══════════════════
+   GALLERY V — AWARDS
+═══════════════════ */
+#acc-section{background:var(--cream);}
+.awards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.award-plaque{background:var(--ivory);border:1px solid var(--gold-b);border-radius:2px;padding:2rem 1.75rem;position:relative;transition:transform .28s,box-shadow .28s,border-color .2s;text-align:center;}
+.award-plaque::before{content:'';position:absolute;inset:7px;border:1px solid rgba(201,162,39,.09);pointer-events:none;}
+.award-plaque:hover{transform:translateY(-4px);border-color:rgba(201,162,39,.42);box-shadow:0 12px 34px rgba(201,162,39,.10);}
+.award-seal{width:52px;height:52px;border-radius:50%;background:var(--gold-t);border:1px solid var(--gold-b);display:flex;align-items:center;justify-content:center;color:var(--gold-dim);margin:0 auto 1.25rem;}
+.award-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.4rem;}
+.award-desc{font-size:.8rem;color:var(--body);line-height:1.65;}
+
+/* ═══════════════════
+   CURATOR'S DESK
+═══════════════════ */
+#contact-section{background:var(--dark);}
+#contact-section .wrap{padding:7rem 5vw;}
+.curator-inner{max-width:620px;}
+.curator-ey{font-family:'Cormorant Garamond',serif;font-size:.62rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:rgba(201,162,39,.48);margin-bottom:1.25rem;display:flex;align-items:center;gap:12px;}
+.curator-ey::before{content:'';width:20px;height:1px;background:var(--gold);}
+.curator-h{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:700;line-height:1.1;color:#fff;letter-spacing:-.01em;margin-bottom:1.25rem;}
+.curator-h em{font-style:italic;color:rgba(201,162,39,.8);}
+.curator-sub{font-size:.93rem;color:rgba(255,255,255,.4);line-height:1.78;margin-bottom:2.5rem;max-width:460px;}
+.curator-links{display:flex;flex-wrap:wrap;gap:.75rem;}
+.curator-btn{display:inline-flex;align-items:center;gap:9px;background:rgba(201,162,39,.06);border:1px solid rgba(201,162,39,.16);border-radius:2px;padding:11px 22px;text-decoration:none;font-size:.93rem;font-weight:400;color:rgba(255,255,255,.68);font-family:'Cormorant Garamond',serif;letter-spacing:.05em;transition:all .2s;}
+.curator-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+
+/* ── FOOTER ── */
+footer{background:var(--dark);border-top:1px solid rgba(201,162,39,.07);text-align:center;padding:2rem;font-family:'Cormorant Garamond',serif;font-size:.88rem;font-style:italic;color:rgba(255,255,255,.18);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .about-exhibit{grid-template-columns:1fr;}
+  .exhibit-hall{grid-template-columns:1fr;}
+  .exhibit-card.feat{grid-template-columns:1fr;}
+  .awards-grid{grid-template-columns:1fr 1fr;}
+  .collection-grid{grid-template-columns:repeat(3,1fr);}
+  .hero-plaque{padding:2rem 1.5rem;}
+}
+@media(max-width:600px){
+  .hero-plaque{padding:1.75rem 1rem;}
+  .wrap{padding:5rem 5vw;}
+  h1{font-size:clamp(2.5rem,10vw,4rem);}
+  .awards-grid{grid-template-columns:1fr;}
+  .collection-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-roles{flex-direction:column;gap:.6rem;align-items:center;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="dust-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:996;opacity:.55;"></canvas>
+<div id="cursor-glow" style="position:fixed;pointer-events:none;z-index:995;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.045) 0%,transparent 68%);transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease;will-change:left,top;"></div>
+<div id="sp"></div>
+
+<!-- ── NAVBAR ── -->
+<nav id="navbar">
+  <a class="nav-logo" href="#hero">
+    <span class="nav-logo-icon">🏛</span>
+    The Museum of Shivani
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about-section">Origins</a></li>
+    <li><a href="#projects-section">Exhibition</a></li>
+    <li><a href="#skills-section">Collection</a></li>
+    <li><a href="#exp-section">Corridor</a></li>
+    <li><a href="#contact-section">Curator</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════
+     ENTRANCE HALL — HERO
+══════════════════════════ -->
+<section id="hero">
+
+  <div class="particles" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+
+    <div class="hero-museum-tag">Est. 2024 · Chennai, India</div>
+
+    <div class="hero-plaque">
+      <div class="plaque-corner tl"></div>
+      <div class="plaque-corner tr"></div>
+      <div class="plaque-corner bl"></div>
+      <div class="plaque-corner br"></div>
+      <span class="hero-the">The Museum of</span>
+      <h1>Shivani R J</h1>
+    </div>
+
+    <div class="hero-orn">
+      <div class="hero-orn-l"></div>
+      <div class="hero-orn-d">◆</div>
+      <div class="hero-orn-r"></div>
+    </div>
+
+    <p class="hero-subtitle">Curating Innovation, Creativity &amp; Technology</p>
+
+    <div class="hero-roles">
+      <span class="hero-role">AI Developer <span class="hero-role-dot"></span></span>
+      <span class="hero-role">Full-Stack Engineer <span class="hero-role-dot"></span></span>
+      <span class="hero-role">Second-Year CSE</span>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#projects-section" class="btn-gold">Enter Exhibition →</a>
+      <a href="#contact-section" class="btn-frame">Curator's Desk</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     GALLERY I — ORIGINS / ABOUT
+══════════════════════════ -->
+<div id="about-section">
+  <div class="wrap">
+    <div class="sh reveal">
+      <div class="gallery-tag">Gallery I</div>
+      <h2>Origins <em>Exhibit</em></h2>
+    </div>
+
+    <div class="about-exhibit">
+
+      <div class="about-card reveal">
+        <div class="ex-num">Exhibit 001 · The Beginning</div>
+        <div class="orn"><div class="orn-l"></div><div class="orn-d">◆</div><div class="orn-r"></div></div>
+        <p class="bio-text">I'm a <strong>second-year Computer Science student</strong> at Rajalakshmi Engineering College who doesn't just study AI — I build real applications with it.</p>
+        <p class="bio-text">My work spans NLP pipelines, generative AI systems, and full-stack web platforms. I'm drawn to problems where machine learning creates tangible impact — whether helping users understand documents faster, generating visual art from text, or bringing transparency to event ticketing through blockchain.</p>
+        <p class="bio-text">Outside labs and lectures, I coordinate technical events for IEEE Computer Society and bring a design-thinking lens to everything I build.</p>
+        <div class="bio-tags">
+          <span class="bio-tag">Machine Learning</span>
+          <span class="bio-tag">NLP</span>
+          <span class="bio-tag">Generative AI</span>
+          <span class="bio-tag">Full-Stack Dev</span>
+          <span class="bio-tag">IEEE CS</span>
+        </div>
+      </div>
+
+      <div class="about-panel">
+        <div class="panel-card reveal r2">
+          <div class="panel-card-title">Provenance</div>
+          <div class="college-name">Rajalakshmi Engineering College</div>
+          <div class="college-sub">B.E. Computer Science &amp; Engineering · 2024–2028</div>
+          <div class="orn" style="margin:.9rem 0 0;"><div class="orn-l"></div><div class="orn-d">◆</div><div class="orn-r"></div></div>
+        </div>
+        <div class="panel-card reveal r3">
+          <div class="panel-card-title">Medium &amp; Style</div>
+          <p class="medium-text">Python · PyTorch · LangChain · FAISS · Stable Diffusion · Java · MySQL · Web3.js · Solidity</p>
+        </div>
+        <div class="panel-card reveal r4">
+          <div class="panel-card-title">Artist's Statement</div>
+          <p class="quote-text">"Building AI and full-stack applications that solve real-world problems — from ideation to deployment."</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     GALLERY II — SKILLS / COLLECTION
+══════════════════════════ -->
+<div id="skills-section">
+  <div class="wrap">
+    <div class="sh reveal">
+      <div class="gallery-tag">Gallery II</div>
+      <h2>Technology <em>Collection</em></h2>
+      <p class="sub">Artifacts curated through years of building, shipping, and iterating.</p>
+    </div>
+
+    <div class="collection-grid reveal r2">
+
+      <div class="collection-cat">Programming Languages</div>
+      <div class="artifact">
+        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" width="28" height="28" alt="Python"></div>
+        <div class="artifact-name">Python</div>
+        <div class="artifact-cat">Lang · A-001</div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" width="28" height="28" alt="Java"></div>
+        <div class="artifact-name">Java</div>
+        <div class="artifact-cat">Lang · A-002</div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" width="28" height="28" alt="HTML5"></div>
+        <div class="artifact-name">HTML5</div>
+        <div class="artifact-cat">Lang · A-003</div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" width="28" height="28" alt="CSS3"></div>
+        <div class="artifact-name">CSS3</div>
+        <div class="artifact-cat">Lang · A-004</div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width="28" height="28" alt="JavaScript"></div>
+        <div class="artifact-name">JavaScript</div>
+        <div class="artifact-cat">Lang · A-005</div>
+      </div>
+
+      <div class="collection-cat">AI &amp; ML Frameworks</div>
+      <div class="artifact">
+        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" width="28" height="28" alt="PyTorch"></div>
+        <div class="artifact-name">PyTorch</div>
+        <div class="artifact-cat">AI · B-001</div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg" width="28" height="28" alt="Scikit-learn"></div>
+        <div class="artifact-name">Scikit-learn</div>
+        <div class="artifact-cat">AI · B-002</div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-case"><svg width="28" height="28" viewBox="0 0 95 88" fill="none"><path d="M47.206 1.5C22.01 1.5 1.5 22.01 1.5 47.206c0 25.196 20.51 45.706 45.706 45.706 25.197 0 45.706-20.51 45.706-45.706C92.912 22.01 72.403 1.5 47.206 1.5z" fill="#FFD21E"/><ellipse cx="33" cy="44" rx="5" ry="7" fill="#333"/><ellipse cx="62" cy="44" rx="5" ry="7" fill="#333"/><path d="M33 62 Q47.5 72 62 62" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div>
+        <div class="artifact-name">Hugging Face</div>
+        <div class="artifact-cat">AI · B-003</div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-case"><svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#1C3C73"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="9" font-weight="800">LC</text></svg></div>
+        <div class="artifact-name">LangChain</div>
+        <div class="artifact-cat">AI · B-004</div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-case"><svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#005A8B"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="7" font-weight="800">FAISS</text></svg></div>
+        <div class="artifact-name">FAISS</div>
+        <div class="artifact-cat">AI · B-005</div>
+      </div>
+
+      <div class="collection-cat">Web &amp; Database</div>
+      <div class="artifact">
+        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" width="28" height="28" alt="MySQL"></div>
+        <div class="artifact-name">MySQL</div>
+        <div class="artifact-cat">DB · C-001</div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/streamlit/streamlit-original.svg" width="28" height="28" alt="Streamlit"></div>
+        <div class="artifact-name">Streamlit</div>
+        <div class="artifact-cat">Web · C-002</div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-case"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" width="28" height="28" alt="Servlets"></div>
+        <div class="artifact-name">Java Servlets</div>
+        <div class="artifact-cat">Web · C-003</div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-case"><svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#F16822"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="6.5" font-weight="800">Web3</text></svg></div>
+        <div class="artifact-name">Web3.js</div>
+        <div class="artifact-cat">Web · C-004</div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-case"><svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="3" fill="#363636"/><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="6" font-weight="800">SOL</text></svg></div>
+        <div class="artifact-name">Solidity</div>
+        <div class="artifact-cat">Web · C-005</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     GALLERY III — PROJECTS
+══════════════════════════ -->
+<div id="projects-section">
+  <div class="wrap">
+    <div class="sh reveal">
+      <div class="gallery-tag">Gallery III</div>
+      <h2>Exhibition <em>Hall</em></h2>
+      <p class="sub">Five original works spanning NLP, Generative AI, Full-Stack development, and Blockchain.</p>
+    </div>
+
+    <div class="exhibit-hall">
+
+      <div class="exhibit-card reveal">
+        <div class="ei">
+          <img src="images/project_elevate.png" alt="Elevate" loading="lazy" style="object-position:top;">
+          <div class="ei-ov"></div>
+          <div class="ei-tag">Exhibit 101</div>
+        </div>
+        <div class="ep">
+          <div class="ep-cat">Full-Stack Web Application</div>
+          <div class="ep-title">Elevate — Job Recruitment &amp; Search Portal</div>
+          <div class="ep-impact">Dual-role platform · Recruiter + Candidate flows</div>
+          <p class="ep-desc">Role-based job platform with secure authentication, real-time application tracking, and full CRUD for job postings. Built end-to-end from database schema to UI.</p>
+          <div class="ep-foot">
+            <div class="ep-chips"><span class="ep-chip">HTML/CSS</span><span class="ep-chip">JavaScript</span><span class="ep-chip">Java Servlets</span><span class="ep-chip">MySQL</span></div>
+            <a class="ep-link" href="#" aria-label="View Elevate"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="exhibit-card reveal r2">
+        <div class="ei">
+          <img src="images/project_docsumm.png" alt="PDF Summarizer" loading="lazy">
+          <div class="ei-ov"></div>
+          <div class="ei-tag">Exhibit 102</div>
+        </div>
+        <div class="ep">
+          <div class="ep-cat">NLP · Generative AI</div>
+          <div class="ep-title">PDF-Based Document Summarization System</div>
+          <div class="ep-impact">BART transformer · Semantic search via FAISS</div>
+          <p class="ep-desc">AI pipeline that chunks, embeds, and semantically retrieves PDF content before summarizing with BART. Delivers precise, context-aware summaries at scale.</p>
+          <div class="ep-foot">
+            <div class="ep-chips"><span class="ep-chip">Python</span><span class="ep-chip">BART</span><span class="ep-chip">LangChain</span><span class="ep-chip">FAISS</span></div>
+            <a class="ep-link" href="#" aria-label="View PDF Summarizer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="exhibit-card reveal">
+        <div class="ei">
+          <img src="images/project_artgen.png" alt="ArtGen" loading="lazy">
+          <div class="ei-ov"></div>
+          <div class="ei-tag">Exhibit 103</div>
+        </div>
+        <div class="ep">
+          <div class="ep-cat">Generative AI</div>
+          <div class="ep-title">Text-to-Image Art Generator</div>
+          <div class="ep-impact">GPU-accelerated · Real-time image generation</div>
+          <p class="ep-desc">Converts natural language prompts into high-quality images using Stable Diffusion. Optimized with GPU support and served via a clean Streamlit interface.</p>
+          <div class="ep-foot">
+            <div class="ep-chips"><span class="ep-chip">Python</span><span class="ep-chip">PyTorch</span><span class="ep-chip">Stable Diffusion</span><span class="ep-chip">Streamlit</span></div>
+            <a class="ep-link" href="#" aria-label="View ArtGen"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="exhibit-card reveal r2">
+        <div class="ei">
+          <img src="images/project_clustering.png" alt="Player Clustering" loading="lazy">
+          <div class="ei-ov"></div>
+          <div class="ei-tag">Exhibit 104</div>
+        </div>
+        <div class="ep">
+          <div class="ep-cat">Machine Learning</div>
+          <div class="ep-title">Player Performance Clustering &amp; Analysis</div>
+          <div class="ep-impact">Silhouette score: 0.888 · PCA + K-Means</div>
+          <p class="ep-desc">Clusters football players by performance metrics using PCA dimensionality reduction, K-Means, and Hierarchical Clustering — enabling data-driven scouting decisions.</p>
+          <div class="ep-foot">
+            <div class="ep-chips"><span class="ep-chip">Python</span><span class="ep-chip">Scikit-learn</span><span class="ep-chip">PCA</span><span class="ep-chip">K-Means</span></div>
+            <a class="ep-link" href="#" aria-label="View Clustering"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="exhibit-card feat reveal">
+        <div class="ei">
+          <img src="images/project_blockticket.png" alt="BlockTicket" loading="lazy" style="object-position:top;">
+          <div class="ei-ov"></div>
+          <div class="ei-tag">Exhibit 105 · Featured Work</div>
+        </div>
+        <div class="ep">
+          <div class="ep-cat">Blockchain · Web3</div>
+          <div class="ep-title">Blockchain Based Event Ticketing System</div>
+          <div class="ep-impact">NFT-minted tickets · Zero fraud · On-chain verification</div>
+          <p class="ep-desc">A decentralised ticketing platform where every ticket is minted as an NFT on Ethereum — eliminating fraud, scalping, and counterfeiting. Each ticket is cryptographically tied to a wallet address with real-time seat tracking and on-chain booking. Features event browsing by category and seamless Web3 UX.</p>
+          <div class="ep-foot">
+            <div class="ep-chips"><span class="ep-chip">Ethereum</span><span class="ep-chip">Solidity</span><span class="ep-chip">Web3.js</span><span class="ep-chip">NFT Minting</span><span class="ep-chip">JavaScript</span></div>
+            <a class="ep-link" href="#" aria-label="View BlockTicket"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     GALLERY IV — EXPERIENCE / THE CORRIDOR
+══════════════════════════ -->
+<div id="exp-section">
+  <div class="wrap">
+    <div class="sh reveal">
+      <div class="gallery-tag">Gallery IV</div>
+      <h2>The <em>Corridor</em></h2>
+      <p class="sub">A walk through positions held and contributions made.</p>
+    </div>
+
+    <div class="corridor">
+      <div class="ci reveal">
+        <div class="ci-dot"></div>
+        <div class="ci-card">
+          <div class="ci-role">Board Event Team Member</div>
+          <div class="ci-org">IEEE Computer Society · Rajalakshmi Engineering College</div>
+          <p class="ci-desc">Coordinated and executed technical events — from planning and promotion to running smooth event operations for a national-level technical community.</p>
+        </div>
+      </div>
+
+      <div class="ci reveal r2">
+        <div class="ci-dot"></div>
+        <div class="ci-card">
+          <div class="ci-role">Graphic Design Intern</div>
+          <div class="ci-org">Inamigos Foundation</div>
+          <p class="ci-desc">Designed posters and promotional content aligned with branding guidelines for a social impact organisation — a background that now informs how I think about product UX.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     GALLERY V — AWARDS WING
+══════════════════════════ -->
+<div id="acc-section">
+  <div class="wrap">
+    <div class="sh reveal">
+      <div class="gallery-tag">Gallery V</div>
+      <h2>Awards <em>Wing</em></h2>
+    </div>
+
+    <div class="awards-grid">
+      <div class="award-plaque reveal">
+        <div class="award-seal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+        </div>
+        <div class="award-title">1st Place — Crack the Case</div>
+        <div class="award-desc">Won a case study competition at college with innovative problem analysis and cohesive teamwork.</div>
+      </div>
+
+      <div class="award-plaque reveal r2">
+        <div class="award-seal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
+        </div>
+        <div class="award-title">Runner-Up — Hackerz Symposium</div>
+        <div class="award-desc">Secured runner-up at a national-level technical symposium — designed and pitched a full solution in under 30 minutes.</div>
+      </div>
+
+      <div class="award-plaque reveal r3">
+        <div class="award-seal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="award-title">1st Place — WIE Hacks</div>
+        <div class="award-desc">Won first place in WIE Hacks — an online hackathon organised by our college, competing across all departments.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     CURATOR'S DESK — CONTACT
+══════════════════════════ -->
+<div id="contact-section">
+  <div class="wrap">
+    <div class="curator-inner">
+      <div class="curator-ey reveal">Curator's Desk</div>
+      <h2 class="curator-h reveal r2">Interested in<br><em>collaboration?</em></h2>
+      <p class="curator-sub reveal r3">Send an inquiry to the curator. I build across AI, ML, and full-stack web — open to interesting projects and conversations.</p>
+      <div class="curator-links reveal r4">
+        <a class="curator-btn" href="mailto:shivani.rj.2024.cse@rajalakshmi.edu.in">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          shivani.rj.2024.cse@rajalakshmi.edu.in
+        </a>
+        <a class="curator-btn" href="https://www.linkedin.com/in/shivani-r-j" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a class="curator-btn" href="https://github.com/Shivani-R-J" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          GitHub
+        </a>
+        <a class="curator-btn" href="tel:9962571492">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.13 6.13l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          9962571492
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>"The Museum of Shivani R J" &nbsp;·&nbsp; Curated with care in Chennai, India &nbsp;·&nbsp; © 2025</footer>
+
+<script>
+// Scroll progress
+const sp = document.getElementById('sp');
+window.addEventListener('scroll',()=>{
+  sp.style.transform=`scaleX(${window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)})`;
+},{passive:true});
+
+// Navbar
+const nav=document.getElementById('navbar');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40),{passive:true});
+
+// Reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Museum spotlight on exhibit cards
+document.querySelectorAll('.exhibit-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+    card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+  });
+});
+
+// Floating gold dust particles
+const pEl=document.querySelector('.particles');
+for(let i=0;i<28;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.cssText=`left:${Math.random()*100}%;animation-duration:${9+Math.random()*14}s;animation-delay:${Math.random()*12}s;width:${1+Math.random()*1.5}px;height:${1+Math.random()*1.5}px;opacity:${.1+Math.random()*.35};`;
+  pEl.appendChild(p);
+}
+
+// ── DUST MOTES ──
+(function(){
+  const canvas = document.getElementById('dust-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, motes = [];
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, {passive:true});
+
+  // Create motes
+  const MOTE_COUNT = 55;
+  for(let i = 0; i < MOTE_COUNT; i++){
+    motes.push({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: 0.6 + Math.random() * 1.8,          // radius 0.6–2.4px
+      opacity: 0.04 + Math.random() * 0.18,  // very subtle
+      speedY: -0.08 - Math.random() * 0.22,  // drift upward slowly
+      speedX: (Math.random() - 0.5) * 0.12,  // gentle horizontal drift
+      wobbleAmp: 0.4 + Math.random() * 0.8,
+      wobbleFreq: 0.002 + Math.random() * 0.003,
+      phase: Math.random() * Math.PI * 2,
+      twinkleSpeed: 0.004 + Math.random() * 0.008,
+      twinklePhase: Math.random() * Math.PI * 2,
+    });
+  }
+
+  let tick = 0;
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    tick++;
+    motes.forEach(m => {
+      // Gentle wobble
+      m.x += m.speedX + Math.sin(tick * m.wobbleFreq + m.phase) * 0.15;
+      m.y += m.speedY;
+
+      // Wrap around
+      if(m.y < -4) m.y = H + 4;
+      if(m.x < -4) m.x = W + 4;
+      if(m.x > W + 4) m.x = -4;
+
+      // Gentle twinkle
+      const alpha = m.opacity * (0.6 + 0.4 * Math.sin(tick * m.twinkleSpeed + m.twinklePhase));
+
+      ctx.beginPath();
+      ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201,162,39,${alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── CURSOR LANTERN GLOW ──
+const cursorGlow = document.getElementById('cursor-glow');
+document.addEventListener('mousemove', e => {
+  cursorGlow.style.left = e.clientX + 'px';
+  cursorGlow.style.top  = e.clientY + 'px';
+}, {passive:true});
+</script>
+</body>
+</html>
