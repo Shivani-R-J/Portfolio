@@ -155,16 +155,27 @@ h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,8vw,6rem);font-weig
 #skills-section .gallery-tag{color:rgba(201,162,39,.55);}
 #skills-section .sub{color:rgba(255,255,255,.3);}
 
-.collection-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(201,162,39,.07);border:1px solid rgba(201,162,39,.07);}
-.collection-cat{grid-column:1/-1;background:rgba(201,162,39,.04);padding:.7rem 1.25rem;font-family:'Cormorant Garamond',serif;font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(201,162,39,.45);display:flex;align-items:center;gap:.75rem;}
-.collection-cat::after{content:'';flex:1;height:1px;background:rgba(201,162,39,.07);}
+.collection-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.15);position:relative;overflow:hidden;}
+.collection-grid::before{content:'';position:absolute;top:0;left:0;right:0;height:100%;background:linear-gradient(to bottom,transparent,rgba(201,162,39,.08),transparent);animation:scanline 6s linear infinite;pointer-events:none;z-index:0;}
+@keyframes scanline{0%{transform:translateY(-100%);}100%{transform:translateY(100%);}}
 
-.artifact{background:var(--dark2);padding:1.75rem 1rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.75rem;transition:background .25s;cursor:default;}
-.artifact:hover{background:rgba(201,162,39,.05);}
-.artifact-case{width:50px;height:50px;border:1px solid rgba(201,162,39,.14);border-radius:2px;display:flex;align-items:center;justify-content:center;background:rgba(201,162,39,.03);transition:border-color .25s;}
-.artifact:hover .artifact-case{border-color:rgba(201,162,39,.32);}
-.artifact-name{font-size:.76rem;font-weight:500;color:rgba(255,255,255,.65);}
-.artifact-cat{font-family:'Cormorant Garamond',serif;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,162,39,.38);}
+.collection-cat{grid-column:1/-1;background:linear-gradient(90deg,rgba(201,162,39,.06),transparent);padding:.7rem 1.25rem;font-family:'Cormorant Garamond',serif;font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(201,162,39,.6);display:flex;align-items:center;gap:.75rem;position:relative;z-index:1;border-bottom:1px solid rgba(201,162,39,.1);}
+.collection-cat::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.2),transparent);}
+
+.artifact{background:var(--dark2);padding:2rem 1rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.85rem;transition:all .35s cubic-bezier(.22,1,.36,1);cursor:none;position:relative;z-index:1;overflow:hidden;}
+.artifact::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%, rgba(201,162,39,.12), transparent 70%);opacity:0;transition:opacity .35s;}
+.artifact:hover{background:rgba(201,162,39,.04);transform:translateY(-2px);box-shadow:0 10px 20px rgba(0,0,0,.2), 0 0 0 1px rgba(201,162,39,.1) inset;}
+.artifact:hover::before{opacity:1;}
+
+.artifact-case{width:56px;height:56px;border:1px solid rgba(201,162,39,.18);border-radius:2px;display:flex;align-items:center;justify-content:center;background:rgba(201,162,39,.03);transition:all .35s;position:relative;}
+.artifact:hover .artifact-case{border-color:var(--gold);background:rgba(201,162,39,.08);box-shadow:0 0 15px rgba(201,162,39,.15);}
+.artifact-case img, .artifact-case svg{transition:transform .35s, filter .35s;}
+.artifact:hover .artifact-case img, .artifact:hover .artifact-case svg{transform:scale(1.15);filter:drop-shadow(0 0 4px rgba(255,255,255,.3));}
+
+.artifact-name{font-size:.78rem;font-weight:600;color:rgba(255,255,255,.8);letter-spacing:.03em;transition:color .35s;position:relative;z-index:1;}
+.artifact:hover .artifact-name{color:var(--gold);}
+.artifact-cat{font-family:'Cormorant Garamond',serif;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,162,39,.4);background:rgba(201,162,39,.05);padding:4px 10px;border-radius:1px;border:1px solid rgba(201,162,39,.1);transition:all .35s;position:relative;z-index:1;}
+.artifact:hover .artifact-cat{color:var(--dark);background:var(--gold);border-color:var(--gold);font-weight:700;}
 
 /* ═══════════════════
    GALLERY III — PROJECTS
