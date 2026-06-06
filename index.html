@@ -262,9 +262,58 @@ footer{background:var(--dark);border-top:1px solid rgba(201,162,39,.07);text-ali
   .collection-grid{grid-template-columns:repeat(2,1fr);}
   .hero-roles{flex-direction:column;gap:.6rem;align-items:center;}
 }
+/* ── LOADER ── */
+#museum-loader{position:fixed;inset:0;background:var(--dark);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s,visibility .8s;}
+.loader-seal{width:60px;height:60px;border:1px solid rgba(201,162,39,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.5rem;font-family:'Cormorant Garamond',serif;animation:pulse-seal 2s infinite;}
+@keyframes pulse-seal{0%,100%{transform:scale(1);opacity:.8;}50%{transform:scale(1.05);opacity:1;box-shadow:0 0 20px rgba(201,162,39,.2);}}
+.loader-text{font-family:'Cormorant Garamond',serif;font-size:.9rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(201,162,39,.7);margin-top:2rem;animation:fade-in-out 2s infinite;}
+@keyframes fade-in-out{0%,100%{opacity:.4;}50%{opacity:1;}}
+
+/* ── CUSTOM CURSOR ── */
+body, a, button, .exhibit-card, .btn-gold, .btn-frame, .curator-btn, .ep-link, .modal-close { cursor: none !important; }
+#custom-cursor{position:fixed;top:0;left:0;width:12px;height:12px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:999999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s,border .2s;display:flex;align-items:center;justify-content:center;color:var(--dark);font-size:0;opacity:.9;}
+#custom-cursor.zoom{width:46px;height:46px;background:rgba(253,250,245,.95);border:1px solid var(--gold);font-size:1.1rem;opacity:1;}
+#custom-cursor::after{content:'+';display:none;font-weight:300;}
+#custom-cursor.zoom::after{display:block;}
+
+/* ── 3D TILT EXTRAS ── */
+.exhibit-card { transform-style: preserve-3d; perspective: 1000px; }
+.exhibit-card .ei, .exhibit-card .ep { transform: translateZ(30px); transition:transform .3s; }
+.exhibit-card:hover .ei, .exhibit-card:hover .ep { transform: translateZ(40px); }
+
+/* ── MODAL ── */
+#exhibit-modal{position:fixed;inset:0;background:rgba(18,15,13,.92);backdrop-filter:blur(8px);z-index:9000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s;padding:2rem;}
+#exhibit-modal.active{opacity:1;visibility:visible;}
+.modal-content{background:var(--ivory);width:100%;max-width:800px;max-height:90vh;overflow-y:auto;border:1px solid var(--gold-b);border-radius:2px;position:relative;transform:translateY(30px) scale(0.98);transition:transform .5s cubic-bezier(.22,1,.36,1);padding:3rem;}
+#exhibit-modal.active .modal-content{transform:translateY(0) scale(1);}
+.modal-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:var(--gold-dim);font-size:1.5rem;cursor:none;padding:10px;line-height:1;}
+.modal-tag{font-family:'Cormorant Garamond',serif;font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:.5rem;}
+.modal-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text);margin-bottom:1.5rem;line-height:1.2;}
+.modal-body h4{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text);margin:2rem 0 .75rem;}
+.modal-body p{font-size:.9rem;color:var(--body);line-height:1.8;margin-bottom:1rem;}
+.modal-links{display:flex;gap:1rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--gold-b);}
+
+/* ── AUDIO TOGGLE ── */
+#audio-toggle{position:fixed;bottom:2rem;right:2rem;width:44px;height:44px;border-radius:50%;background:rgba(18,15,13,.8);border:1px solid rgba(201,162,39,.3);color:var(--gold);display:flex;align-items:center;justify-content:center;z-index:8000;backdrop-filter:blur(4px);cursor:none;transition:transform .2s,border-color .2s;}
+#audio-toggle:hover{transform:scale(1.1);border-color:var(--gold);}
 </style>
 </head>
 <body>
+
+<!-- LOADER -->
+<div id="museum-loader">
+  <div class="loader-seal">🏛</div>
+  <div class="loader-text">Preparing Exhibition</div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div id="custom-cursor"></div>
+
+<!-- AUDIO -->
+<button id="audio-toggle" aria-label="Toggle Ambient Audio">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+</button>
+<audio id="ambient-audio" loop src="https://cdn.pixabay.com/download/audio/2022/11/22/audio_febc508520.mp3?filename=space-ambience-56265.mp3"></audio>
 
 <canvas id="dust-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:996;opacity:.55;"></canvas>
 <div id="cursor-glow" style="position:fixed;pointer-events:none;z-index:995;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.045) 0%,transparent 68%);transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease;will-change:left,top;"></div>
@@ -678,7 +727,22 @@ footer{background:var(--dark);border-top:1px solid rgba(201,162,39,.07);text-ali
       </div>
     </div>
   </div>
-</div><script>
+</div>
+
+<!-- MODAL -->
+<div id="exhibit-modal">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Close">×</button>
+    <div class="modal-tag" id="m-tag">Exhibit Detail</div>
+    <h3 class="modal-title" id="m-title">Project Title</h3>
+    <div class="modal-body" id="m-body">
+      <!-- Injected via JS -->
+    </div>
+    <div class="modal-links" id="m-links"></div>
+  </div>
+</div>
+
+<script>
 // Scroll progress
 const sp = document.getElementById('sp');
 window.addEventListener('scroll',()=>{
@@ -695,12 +759,24 @@ const obs=new IntersectionObserver(entries=>{
 },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-// Museum spotlight on exhibit cards
+// Museum spotlight & 3D Tilt on exhibit cards
 document.querySelectorAll('.exhibit-card').forEach(card=>{
   card.addEventListener('mousemove',e=>{
     const r=card.getBoundingClientRect();
-    card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
-    card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+    const x = e.clientX-r.left;
+    const y = e.clientY-r.top;
+    card.style.setProperty('--mx',(x/r.width*100)+'%');
+    card.style.setProperty('--my',(y/r.height*100)+'%');
+    
+    // 3D Tilt calculation
+    const centerX = r.width / 2;
+    const centerY = r.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -5;
+    const rotateY = ((x - centerX) / centerX) * 5;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)`;
   });
 });
 
@@ -802,8 +878,82 @@ document.addEventListener('mousemove', e => {
     setTimeout(type, speed);
   }
   
-  setTimeout(type, 1800); // start after hero animations
+  setTimeout(type, 3000); // start after loader + hero animations
 })();
+
+// ── LOADER ──
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const loader = document.getElementById('museum-loader');
+    loader.style.opacity = '0';
+    setTimeout(() => loader.style.visibility = 'hidden', 800);
+  }, 1000); // 1s loading screen
+});
+
+// ── CUSTOM CURSOR ──
+const customCursor = document.getElementById('custom-cursor');
+document.addEventListener('mousemove', e => {
+  customCursor.style.left = e.clientX + 'px';
+  customCursor.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('.exhibit-card').forEach(card => {
+  card.addEventListener('mouseenter', () => customCursor.classList.add('zoom'));
+  card.addEventListener('mouseleave', () => customCursor.classList.remove('zoom'));
+});
+
+// ── MODAL LOGIC ──
+const caseStudies = {
+  "Elevate — Job Recruitment & Search Portal": "<h4>The Problem</h4><p>Traditional job portals separate candidate and recruiter workflows into disjointed experiences, causing tracking issues.</p><h4>The Architecture</h4><p>I architected a dual-role monolithic application using Java Servlets and MySQL. The backend enforces strict role-based access control (RBAC), ensuring recruiters can manage postings while candidates securely track applications.</p><h4>The Outcome</h4><p>A fully functional, secure platform demonstrating strong fundamentals in database design, session management, and server-side rendering.</p>",
+  "PDF-Based Document Summarization System": "<h4>The Problem</h4><p>Reading lengthy technical documents is time-consuming. Existing tools hallucinate information or fail to parse large PDFs effectively.</p><h4>The Architecture</h4><p>I built a robust NLP pipeline using Python. The system chunks PDF text, embeds it using Hugging Face models, and stores vectors in FAISS for semantic retrieval. A BART transformer model then generates accurate summaries.</p><h4>The Outcome</h4><p>A scalable tool that cuts document review time by 80%, showcasing my ability to integrate LLMs, vector databases, and traditional NLP.</p>",
+  "Text-to-Image Art Generator": "<h4>The Problem</h4><p>Running high-quality generative AI models locally requires complex environment setups and lacks accessible interfaces for users.</p><h4>The Architecture</h4><p>I wrapped the Stable Diffusion model (via PyTorch) in a clean Streamlit web app. The application optimizes GPU memory usage during inference to ensure fast, real-time image generation from prompts.</p><h4>The Outcome</h4><p>A seamless, highly interactive web application that bridges the gap between complex deep learning models and user-friendly design.</p>",
+  "Player Performance Clustering & Analysis": "<h4>The Problem</h4><p>Sports scouting relies heavily on intuition. Finding players with similar statistical profiles across massive datasets is difficult.</p><h4>The Architecture</h4><p>I utilized Principal Component Analysis (PCA) to reduce the dimensionality of complex player stats, then applied K-Means and Hierarchical clustering algorithms.</p><h4>The Outcome</h4><p>Achieved a high silhouette score of 0.888, proving the clusters are distinct and statistically significant, providing a mathematical foundation for scouting.</p>",
+  "Blockchain Based Event Ticketing System": "<h4>The Problem</h4><p>The event industry is plagued by ticket scalping, counterfeit tickets, and exorbitant secondary market fees.</p><h4>The Architecture</h4><p>I developed a dApp where tickets are minted as non-fungible tokens (NFTs) on an Ethereum-compatible testnet using Solidity. The frontend, built with Web3.js, allows users to connect their wallets and securely mint tickets.</p><h4>The Outcome</h4><p>A zero-fraud ticketing ecosystem demonstrating practical Web3 utility, secure smart contract development, and modern dApp architecture.</p>"
+};
+
+const modal = document.getElementById('exhibit-modal');
+const modalClose = document.querySelector('.modal-close');
+const mTag = document.getElementById('m-tag');
+const mTitle = document.getElementById('m-title');
+const mBody = document.getElementById('m-body');
+const mLinks = document.getElementById('m-links');
+
+document.querySelectorAll('.exhibit-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const title = card.querySelector('.ep-title').innerText;
+    mTitle.innerText = title;
+    mTag.innerText = card.querySelector('.ei-tag').innerText;
+    mBody.innerHTML = caseStudies[title] || "<p>Detailed exhibition data is currently being curated.</p>";
+    mLinks.innerHTML = card.querySelector('.ep-foot').innerHTML;
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    customCursor.classList.remove('zoom');
+  });
+});
+
+modalClose.addEventListener('click', () => {
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+});
+modal.addEventListener('click', e => { if(e.target === modal) modalClose.click(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') modalClose.click(); });
+
+// ── AUDIO TOGGLE ──
+const audioBtn = document.getElementById('audio-toggle');
+const audio = document.getElementById('ambient-audio');
+audio.volume = 0.3;
+let isPlaying = false;
+
+audioBtn.addEventListener('click', () => {
+  if(isPlaying) {
+    audio.pause();
+    audioBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+  } else {
+    audio.play();
+    audioBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+  }
+  isPlaying = !isPlaying;
+});
 </script>
 </body>
 </html>
